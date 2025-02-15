@@ -24,7 +24,7 @@ from trl import SFTTrainer
 model_name = "NousResearch/Llama-2-7b-chat-hf"
 
 # The instruction dataset to use
-dataset_name = "output.txt"
+# dataset_name = "output.txt"
 
 # Fine-tuned model name
 new_model = "Llama-2-7b-chat-finetune"
@@ -130,7 +130,7 @@ device_map = {"": 0}
 
 # step5____________________________________________________________________________________________________
 # Load dataset (you can process it here)
-dataset = load_dataset("text", data_files=dataset_name, split="train")
+dataset = load_dataset("json", data_files="processed_dataset.json")
 
 # Load tokenizer and model with QLoRA configuration
 compute_dtype = getattr(torch, bnb_4bit_compute_dtype)
