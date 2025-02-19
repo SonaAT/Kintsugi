@@ -21,7 +21,7 @@ from trl import SFTTrainer
 
 # step4____________________________________________________________________________________________________
 # The model that you want to train from the Hugging Face hub
-model_name = "NousResearch/Llama-2-7b-chat-hf"
+model_name = "NousResearch/Llama-2-7b-chat-hf"  #"NousResearch/Llama-2-3b-hf"
 
 # The instruction dataset to use
 # dataset_name = "output.txt"
@@ -73,13 +73,13 @@ fp16 = False
 bf16 = False
 
 # Batch size per GPU for training
-per_device_train_batch_size = 4
+per_device_train_batch_size = 1
 
 # Batch size per GPU for evaluation
-per_device_eval_batch_size = 4
+per_device_eval_batch_size = 1
 
 # Number of update steps to accumulate the gradients for
-gradient_accumulation_steps = 1
+gradient_accumulation_steps = 8
 
 # Enable gradient checkpointing
 gradient_checkpointing = True
@@ -126,7 +126,7 @@ max_seq_length = None
 packing = False
 
 # Load the entire model on the GPU 0
-device_map = {"": 0}
+device_map = "auto"     #device_map = {"": 0}
 
 # step5____________________________________________________________________________________________________
 # Load dataset (you can process it here)
@@ -192,6 +192,8 @@ training_arguments = TrainingArguments(
     group_by_length=group_by_length,
     lr_scheduler_type=lr_scheduler_type,
     report_to="tensorboard"
+    save_steps=500,  # Save every 500 steps
+    save_total_limit=2,  # Keep only last 2 checkpoints
 )
 
 # Set supervised fine-tuning parameters
@@ -207,8 +209,12 @@ trainer = SFTTrainer(
 )
 
 # Train model
-trainer.train()
+resume_checkpoint = None  # Change this to your checkpoint path if needed
+trainer.train(resume_from_checkpoint=True)
 
 # step6____________________________________________________________________________________________________
 # Save trained model
-trainer.model.save_pretrained(new_model)
+#trainer.model.save_pretrained(new_model)
+trainer.model.save_pretrained(new_model)  # Save LoRA adapters first
+merged_model = PeftModel.from_pretrained(model, new_model)
+merged_model.save_pretrained(new_model + "_merged")  # Save merged model
