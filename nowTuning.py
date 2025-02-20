@@ -20,6 +20,8 @@ from trl import SFTTrainer
 # step3: reformat datasets_________________________________________________________________________________
 
 # step4____________________________________________________________________________________________________
+# from huggingface_hub import login
+# login()
 # The model that you want to train from the Hugging Face hub
 model_name = "NousResearch/Llama-2-7b-chat-hf"  #"NousResearch/Llama-2-3b-hf"
 
