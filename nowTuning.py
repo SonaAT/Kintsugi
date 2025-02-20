@@ -1,5 +1,5 @@
 # step1____________________________________________________________________________________________________
-!pip install -q accelerate==0.21.0 peft==0.4.0 bitsandbytes==0.40.2 transformers==4.31.0 trl==0.4.7
+!pip install -q accelerate==0.21.0 peft==0.4.0 bitsandbytes==0.40.2 transformers==4.31.0 trl==0.4.7 huggingface_hub
 
 # step2____________________________________________________________________________________________________
 import os
@@ -16,12 +16,12 @@ from transformers import (
 )
 from peft import LoraConfig, PeftModel
 from trl import SFTTrainer
+from huggingface_hub import login
 
 # step3: reformat datasets_________________________________________________________________________________
 
 # step4____________________________________________________________________________________________________
-# from huggingface_hub import login
-# login()
+login(token="your_huggingface_token")
 # The model that you want to train from the Hugging Face hub
 model_name = "NousResearch/Llama-2-7b-chat-hf"  #"NousResearch/Llama-2-3b-hf"
 
@@ -193,7 +193,7 @@ training_arguments = TrainingArguments(
     warmup_ratio=warmup_ratio,
     group_by_length=group_by_length,
     lr_scheduler_type=lr_scheduler_type,
-    report_to="tensorboard"
+    report_to="tensorboard",
     save_steps=500,  # Save every 500 steps
     save_total_limit=2,  # Keep only last 2 checkpoints
 )
