@@ -210,7 +210,7 @@ trainer = SFTTrainer(
 
 # Train model
 resume_checkpoint = None  # Change this to your checkpoint path if needed
-trainer.train(resume_from_checkpoint=True)
+trainer.train(resume_from_checkpoint=resume_checkpoint)
 
 # step6____________________________________________________________________________________________________
 # Save trained model
