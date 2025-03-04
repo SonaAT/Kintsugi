@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New User - Iris</title>
+  <link rel="stylesheet" href="new_user.css">
+</head>
+<body>
+  <div class="main-container">
+    <h1>Iris</h1>
+    <p class="subtitle">And like an Iris you will bloom, wither and bloom again...</p>
+    <form class="signup-form" onsubmit="handleFormSubmit(event)">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+      </div>
+      <div class="form-group">
+        <label for="URL">URL:</label>
+        <input type="text" id="URL" name="URL" placeholder="Enter a link to a video or music that calms you down" required>
+      </div>
+      <button type="submit" class="submit-btn">Sign Up</button>
+    </form>
+  </div>
+
+  <script>
+    function handleFormSubmit(event) {
+      // Prevent default form submission
+      event.preventDefault();
+
+      // Simulate successful signup (add any validation if required)
+      // Redirect to the "Signed In Successfully!" page
+      window.location.href = "bunny.html";
+    }
+  </script>
+</body>
+</html>
