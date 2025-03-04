@@ -1,0 +1,111 @@
+/* General Styling */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Playfair Display', serif;
+  background: url('file:///C:/Users/Maria%20Tresa%20Binu/Pictures/login4new.jpg') no-repeat center;
+  background-size: cover;
+  color: #4a4a4a;
+}
+
+/* Center Content */
+.main-container {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+/* Title Styling */
+h1 {
+  font-size: 4rem; /* Increased size for the main heading */
+  color: #ffffff; /* Golden color */
+  margin-bottom: 10px;
+  font-family: 'Cavas', serif; /* Elegant font */
+}
+
+/* Subtitle Styling */
+.subtitle {
+  font-size: 1.8rem;
+  color: #ffffff;
+  margin-bottom: 40px;
+  font-family: 'Snell Roundhand', cursive; /* Friendly, serif font for subtitles */
+}
+
+/* Form Styling */
+.login-form {
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: 'Roboto', sans-serif; /* Clean font for the form */
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #ffffff;
+  flex: 1;
+  text-align: right;
+  margin-right: 20px;
+  font-family: 'Roboto', sans-serif; /* Consistent font for labels */
+}
+
+input {
+  flex: 2;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-family: 'Roboto', sans-serif; /* Consistent font for input fields */
+}
+
+input:focus {
+  outline: none;
+  border-color: #72c2ef; /* Golden color */
+}
+
+/* Login Button */
+.button-container {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  padding-left: 200px;
+  height: 100%; 
+}
+.login-btn {
+  display: inline-block;
+  background-color: #0c6798;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.login-btn:hover {
+  background-color: #5cb7e8;
+}
+
+/* Signup Link */
+.signup-text {
+  margin-top: 20px;
+  font-size: 1rem;
+  font-family: 'Open Sans', sans-serif; /* Clean font for the signup text */
+}
+
+.signup-text a {
+  color: #4286b7;
+  text-decoration: none;
+}
+
+.signup-text a:hover {
+  text-decoration: underline;
+}
