@@ -16,7 +16,7 @@ from peft import LoraConfig, PeftModel
 from trl import SFTTrainer
 #============================================================================================================
 # The model that you want to train from the Hugging Face hub
-model_name = "NousResearch/Llama-2-7b-chat-hf"
+model_name = "meta-llama/Llama-2-7b-chat-hf"
 
 # Fine-tuned model name
 new_model = "Llama-2-7b-chat-finetune"
