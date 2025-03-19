@@ -1,0 +1,104 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background-image: url('spinbg.png');
+  background-size: cover;
+  background-position: center;
+  margin: 0;
+  padding-top: 60px; /* Adjusted for navbar height */
+  overflow: hidden; /* Prevents scrolling */
+}
+
+/* Navigation Bar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  padding: 15px 20px;
+  color: white;
+  width: 100%; /* Makes it stretch fully */
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+  flex-grow: 1;
+}
+
+.nav-links li {
+  display: inline;
+}
+
+.nav-links a, .nav-links button {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: color 0.3s ease;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.nav-links a:hover, .nav-links button:hover {
+  color: #f9c5d1; /* Pastel hover effect */
+}
+
+.logout-button {
+  background-color: #f44336; /* Red for logout */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 1em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 20px; /* Aligns logout button correctly */
+}
+
+.logout-button:hover {
+  background-color: #d32f2f;
+}
+
+.wheel-container {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  flex-shrink: 0; /* Prevents shrinking */
+}
+
+.button-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.result {
+  margin-top: 20px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
