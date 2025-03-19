@@ -173,10 +173,57 @@ html, body {
   content: url('journal.webp');
 }
 
-#mindfulnessBtn img {
-  content: url('game.webp');
-}
 
 #selfCareBtn img {
   content: url('spin\ wheel.gif');
+}
+/* Navigation Bar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  padding: 10px 20px;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  display: inline;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #f9c5d1; /* Pastel hover effect */
+}
+
+.logout-button {
+  background-color: #f44336; /* Red for logout */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 1em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #d32f2f;
 }

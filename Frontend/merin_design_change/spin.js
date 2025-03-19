@@ -69,7 +69,7 @@ const tasks = [
   
   function spin() {
     if (isSpinning) return; // Prevent multiple spins
-    isSpinning = true;
+    isSpinning = false;
   
     const randomDegree = Math.floor(3600 + Math.random() * 360); // Random spin (10-11 rotations)
     const finalRotation = (randomDegree + currentRotation) % 360; // Total rotation angle
@@ -97,4 +97,7 @@ const tasks = [
   // Draw the initial wheel
   drawWheel();
   spinButton.addEventListener("click", spin);
-  
+
+  function logout() {
+    window.location.href = "login.html";
+  }

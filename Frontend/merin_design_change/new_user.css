@@ -2,8 +2,8 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Playfair Display', serif;
-  background: url('file:///C:/Users/Maria%20Tresa%20Binu/Pictures/login4new.jpg') no-repeat center;
+  font-family: 'Playfair Display', serif; /* Updated to Playfair Display for a more elegant body font */
+  background: url('newusermodified.jpg') no-repeat center center fixed;
   background-size: cover;
   color: #4a4a4a;
 }
@@ -12,29 +12,30 @@ body {
 .main-container {
   text-align: center;
   padding: 50px 20px;
+  font-family: 'Open Sans', sans-serif; /* Clean, modern font for content */
 }
 
 /* Title Styling */
 h1 {
   font-size: 4rem; /* Increased size for the main heading */
-  color: #ffffff; /* Golden color */
+  color: #26809e; /* Golden color */
   margin-bottom: 10px;
-  font-family: 'Cavas', serif; /* Elegant font */
+  font-family: 'Cavas', serif; /* Elegant font for headings */
 }
 
 /* Subtitle Styling */
 .subtitle {
-  font-size: 1.8rem;
-  color: #ffffff;
+  font-size: 1.2rem;
+  color: #26809e;
   margin-bottom: 40px;
-  font-family: 'Snell Roundhand', cursive; /* Friendly, serif font for subtitles */
+  font-family: 'Snell Roundhand', cursive; /* Friendly font for subtitles */
 }
 
 /* Form Styling */
-.login-form {
+.signup-form {
   max-width: 600px;
   margin: 0 auto;
-  font-family: 'Roboto', sans-serif; /* Clean font for the form */
+  font-family: 'Roboto', sans-serif; /* Clear font for the form */
 }
 
 .form-group {
@@ -47,7 +48,7 @@ h1 {
 label {
   font-weight: bold;
   font-size: 1.1rem;
-  color: #ffffff;
+  color: #26809e;
   flex: 1;
   text-align: right;
   margin-right: 20px;
@@ -66,20 +67,13 @@ input {
 
 input:focus {
   outline: none;
-  border-color: #72c2ef; /* Golden color */
+  border-color: #ffffff; /* Golden color */
 }
 
-/* Login Button */
-.button-container {
-  display: flex;
-  justify-content: center; 
-  align-items: center; 
-  padding-left: 200px;
-  height: 100%; 
-}
-.login-btn {
+/* Submit Button */
+.submit-btn {
   display: inline-block;
-  background-color: #0c6798;
+  background-color: #26809e; /* Golden color */
   color: white;
   padding: 10px 20px;
   font-size: 1.2rem;
@@ -87,25 +81,9 @@ input:focus {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif; /* Clear font for the button */
 }
 
-.login-btn:hover {
-  background-color: #5cb7e8;
-}
-
-/* Signup Link */
-.signup-text {
-  margin-top: 20px;
-  font-size: 1rem;
-  font-family: 'Open Sans', sans-serif; /* Clean font for the signup text */
-}
-
-.signup-text a {
-  color: #4286b7;
-  text-decoration: none;
-}
-
-.signup-text a:hover {
-  text-decoration: underline;
+.submit-btn:hover {
+  background-color: #11607a;
 }
