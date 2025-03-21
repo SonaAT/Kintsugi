@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="https://iris-panicassistance-lrblq2hla932jappdange8x.streamlit.app">Panic Attack Chatbot</a></li>
+            <li><a href="journaling.html">Conversational Journaling</a></li>
+            <li><a href="spin.html">Self-Care Spinwheel</a></li>
+        </ul>
+        <button class="logout-button" onclick="logout()">Logout</button>
+    </nav>
+    
+    <!-- Top Section -->
+    <header class="top-section">
+        <h1 class="title">IRIS</h1>
+    </header>
+
+    <!-- Middle Section -->
+    <section class="middle-section">
+        <p><strong>About Panic Attacks:</strong><br>
+        Panic attacks are intense episodes of fear and anxiety, often accompanied by physical symptoms like a racing heart, shortness of breath, and dizziness. These attacks can come out of nowhere and may lead to overwhelming feelings of loss of control. Our web app, IRIS, is designed to help individuals manage these moments of anxiety and fear. By offering interactive tools such as a Panic Attack Chatbot and Conversational Journaling, we aim to provide support and guidance during difficult times. The goal of IRIS is to promote calmness and mental clarity, helping users navigate through stress in a more controlled and peaceful manner. We also encourage self-care and self-compassion as part of the healing process. Through our Self-Care Spinwheel, users can explore simple, fun activities that can help them unwind, relax, and rejuvenate.</p>
+    </section>
+
+    <!-- Bottom Section -->
+    <section class="bottom-section">
+        <div class="button-container">
+            <div class="button-item">
+                <img src="chat.webp" alt="Panic Attack" class="button-icon">
+                <a href="https://iris-panicassistance-lrblq2hla932jappdange8x.streamlit.app" class="button-link">Panic Attack Chatbot</a>
+            </div>
+            <div class="button-item">
+                <img src="journal.webp" alt="Journaling" class="button-icon">
+                <a href="journaling.html" class="button-link">Conversational Journaling</a>
+            </div>
+            <div class="button-item">
+                <img src="spin wheel.gif" alt="Spinwheel" class="button-icon">
+                <a href="spin.html" class="button-link">Self-Care Spinwheel</a>
+            </div>
+        </div>
+    </section>
+    <script src="home.js"></script>
+</body>
+</html>
