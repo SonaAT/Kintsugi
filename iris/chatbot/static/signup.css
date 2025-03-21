@@ -1,0 +1,89 @@
+/* General Styling */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Playfair Display', serif; /* Elegant body font */
+  background: url('newusermodified.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #4a4a4a;
+}
+
+/* Center Content */
+.main-container {
+  text-align: center;
+  padding: 50px 20px;
+  font-family: 'Open Sans', sans-serif; /* Clean, modern font */
+}
+
+/* Title Styling */
+h1 {
+  font-size: 4rem;
+  color: #26809e; /* Blue-green shade */
+  margin-bottom: 10px;
+  font-family: 'Cavas', serif; /* Elegant font */
+}
+
+/* Subtitle Styling */
+.subtitle {
+  font-size: 1.2rem;
+  color: #26809e;
+  margin-bottom: 40px;
+  font-family: 'Snell Roundhand', cursive;
+}
+
+/* Form Styling */
+.signup-form {
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: 'Roboto', sans-serif;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #26809e;
+  flex: 1;
+  text-align: right;
+  margin-right: 20px;
+  font-family: 'Roboto', sans-serif;
+}
+
+input {
+  flex: 2;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-family: 'Roboto', sans-serif;
+}
+
+input:focus {
+  outline: none;
+  border-color: #11607a;
+}
+
+/* Submit Button */
+.submit-btn {
+  display: inline-block;
+  background-color: #26809e;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.submit-btn:hover {
+  background-color: #11607a;
+}
