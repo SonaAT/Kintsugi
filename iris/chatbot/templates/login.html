@@ -1,0 +1,177 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Iris</title>
+  <link rel="stylesheet" href="{% static 'login.css' %}">
+  <style>
+    /* Flower Animation Styles */
+    .flower-container {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-color: #f8f5f2;
+      bottom: 60px;
+      right: 25%;
+      left: 50%;
+      margin-left: -75px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      overflow: visible;
+      display: none; /* Initially hidden */
+    }
+
+    svg {
+      width: 50%;
+      height: auto;
+      overflow: visible;
+    }
+
+    .petal, .leaf {
+      transform-origin: center bottom;
+      transform: scale(0);
+      transition: transform 3s ease-in-out;
+    }
+
+    .petal:nth-child(1) {
+      transition-delay: 0.2s;
+    }
+
+    .petal:nth-child(2) {
+      transition-delay: 0.4s;
+    }
+
+    .petal:nth-child(3) {
+      transition-delay: 0.6s;
+    }
+
+    .leaf:nth-child(1) {
+      transition-delay: 0.8s;
+    }
+
+    .leaf:nth-child(2) {
+      transition-delay: 1s;
+    }
+
+    .affirmation-btn {
+      display: inline-block;
+      background-color: #0c6798;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    .affirmation-btn:hover {
+      background-color: #5cb7e8;
+    }
+
+    .breath-text {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #4170a4;
+      margin-top: 10px;
+    }
+
+    .button-container {
+      display: flex;
+      gap: 10px; /* Adds spacing between buttons */
+      margin-top: 20px;
+      left: 50%;
+      right:25%;
+      margin-left: -150px
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <h1>Iris</h1>
+    <p class="subtitle">Where hope Blooms...</p>
+    <form class="login-form" method="POST" action="{% url 'login' %}">
+      {% csrf_token %}
+      <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" placeholder="Enter your username" required>
+      </div>
+      <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" placeholder="Enter your password" required>
+      </div>
+      <div class="button-container">
+          <button type="submit" class="login-btn">Login</button>
+          <button class="affirmation-btn" onclick="playAnimation()">Play Affirmation</button>
+      </div>
+    </form>
+
+    <p class="signup-text">New user? <a href="{% url 'signup' %}">Sign Up</a></p>
+
+    <div class="flower-container" id="flower-container">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+        <!-- Petals -->
+        <path class="petal" d="M100 50 Q80 20, 60 50 T100 120 Z" fill="#a8d5e2" />
+        <path class="petal" d="M100 50 Q120 20, 140 50 T100 120 Z" fill="#a8d5e2" />
+        <path class="petal" d="M100 50 Q100 10, 60 50 T100 120 Z" fill="#82bdd0" />
+        <!-- Leaves -->
+        <path class="leaf" d="M80 180 Q60 150, 50 180 T80 200 Z" fill="#7fa8c9" />
+        <path class="leaf" d="M120 180 Q140 150, 150 180 T120 200 Z" fill="#7fa8c9" />
+        <!-- Stem -->
+        <rect x="97.5" y="120" width="5" height="100" fill="#5a8f98" />
+      </svg>
+      <div class="breath-text" id="breath-text">Breathe In</div>
+    </div>
+  </div>
+
+  <script>
+    const petals = document.querySelectorAll('.petal');
+    const leaves = document.querySelectorAll('.leaf');
+    const flowerContainer = document.getElementById('flower-container');
+    const breathText = document.getElementById('breath-text');
+
+    let isBreathingIn = true;
+
+    function playAnimation() {
+      flowerContainer.style.display = 'flex'; // Show the flower container
+      animateFlower();
+    }
+
+    function animateFlower() {
+      if (isBreathingIn) {
+        // Bloom the flower (Breathe In)
+        petals.forEach(petal => {
+          petal.style.transform = 'scale(1)';
+        });
+        leaves.forEach(leaf => {
+          leaf.style.transform = 'scale(1)';
+        });
+        breathText.textContent = 'Breathe In';
+        isBreathingIn = false;
+      } else {
+        // Shrink the flower (Breathe Out)
+        petals.forEach(petal => {
+          petal.style.transform = 'scale(0)';
+        });
+        leaves.forEach(leaf => {
+          leaf.style.transform = 'scale(0)';
+        });
+        breathText.textContent = 'Breathe Out';
+        isBreathingIn = true;
+      }
+
+      // Loop the breathing animation
+      setTimeout(() => {
+        animateFlower();
+      }, 6000); 
+    }
+  </script>
+</body>
+</html>
