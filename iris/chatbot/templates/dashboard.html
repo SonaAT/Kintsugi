@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'dashboard.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a href="home.html" style="color: black;">Home</a></li>
+            <li><a href="https://iris-panicassistance-lrblq2hla932jappdange8x.streamlit.app" style="color: black;">Panic Attack Chatbot</a></li>
+            <li><a href="journaling.html" style="color: black;">Conversational Journaling</a></li>
+            <li><a href="spin.html" style="color: black;">Self-Care Spinwheel</a></li>
+        </ul>
+        <div class="nav-right">
+            <a href="{% url 'dashboard' %}" class="dashboard-button" style="color: white">Dashboard</a>
+            <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Welcome, {{ user.username }} 👋</h1>
+        
+        <!-- Date Picker -->
+        <div class="date-filter">
+            <label for="date">Select Date:</label>
+            <input type="date" id="date" onchange="filterData()">
+        </div>
+
+        <!-- Trigger Section -->
+        <div class="section">
+            <h2>Panic Attack Triggers</h2>
+            <ul id="trigger-list">
+                {% for entry in triggers %}
+                    <li data-date="{{ entry.timestamp|date:'Y-m-d' }}">
+                        <strong>{{ entry.time_only }}</strong> - {{ entry.trigger }}
+                    </li>
+                {% empty %}
+                    <p>No triggers recorded.</p>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Mood Section -->
+        <div class="section">
+            <h2>Daily Mood Log</h2>
+            <ul id="mood-list">
+                {% for entry in moods %}
+                    <li data-date="{{ entry.timestamp|date:'Y-m-d' }}">
+                        <strong>{{ entry.time_only }}</strong> - {{ entry.mood }}
+                    </li>
+                {% empty %}
+                    <p>No mood entries recorded.</p>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function filterData() {
+            let selectedDate = document.getElementById('date').value;
+            
+            document.querySelectorAll("#trigger-list li, #mood-list li").forEach(item => {
+                let itemDate = item.getAttribute('data-date');
+                item.style.display = itemDate === selectedDate ? "block" : "none";
+            });
+        }
+    </script>
+</body>
+</html>

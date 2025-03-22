@@ -227,3 +227,23 @@ html, body {
 .logout-button:hover {
   background-color: #d32f2f;
 }
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dashboard-button {
+  background-color: #ffffff;
+  color: red;
+  padding: 8px 12px;
+  font-size: 1em;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.dashboard-button:hover {
+  background-color: gray;
+}
