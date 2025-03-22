@@ -15,7 +15,10 @@
             <li><a href="journaling.html">Conversational Journaling</a></li>
             <li><a href="spin.html">Self-Care Spinwheel</a></li>
         </ul>
-        <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+        <div class="nav-right">
+            <a href="{% url 'dashboard' %}" class="dashboard-button" style="color: white">Dashboard</a>
+            <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+        </div>
     </nav>
     
     <!-- Top Section -->

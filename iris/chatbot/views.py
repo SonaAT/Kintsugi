@@ -4,6 +4,8 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.views.decorators.cache import cache_control
+from .models import PanicAttackEntry, DailyMoodEntry
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -48,3 +50,23 @@ def signup_view(request):
         return redirect("index")  # Redirect to home page after signup
 
     return render(request, "signup.html")
+
+@login_required
+def dashboard(request):
+    # Fetching triggers and moods for the logged-in user
+    triggers = PanicAttackEntry.objects.filter(user=request.user).order_by('-timestamp')
+    moods = DailyMoodEntry.objects.filter(user=request.user).order_by('-timestamp')
+
+    # Extract only the time (HH:MM format) for display
+    for entry in triggers:
+        entry.time_only = entry.timestamp.strftime('%H:%M')
+
+    for entry in moods:
+        entry.time_only = entry.timestamp.strftime('%H:%M')
+
+    context = {
+        'triggers': triggers,
+        'moods': moods
+    }
+
+    return render(request, 'dashboard.html', context)
