@@ -1,20 +1,22 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Spin the Wheel</title>
-  <link rel="stylesheet" href="spin.css">
+  <link rel="stylesheet" href="{% static 'spin.css' %}">
 </head>
 <body>
   <nav class="navbar">
     <ul class="nav-links">
-        <li><a href="home.html">Home</a></li>
-        <li><a href="panic_attack.html">Panic Attack Chatbot</a></li>
-        <li><a href="journaling.html">Conversational Journaling</a></li>
-        <li><a href="spin.html">Self-Care Spinwheel</a></li>
+        <li><a href="{% url 'index' %}">Home</a></li>
+        <li><a href="http://localhost:8501?sessionid={{ request.session.session_key }}">Panic Attack Chatbot</a></li>
+        <li><a href="http://localhost:8502?sessionid={{ request.session.session_key }}">Conversational Journaling</a></li>
+        <li><a href="{% url 'spin' %}">Self-Care Spinwheel</a></li>
     </ul>
-    <button class="logout-button" onclick="logout()">Logout</button>
+    <a href="{% url 'dashboard' %}" class="dashboard-button" style="color: white; background-color: rgba(255, 0, 0, 0.923);">Dashboard</a>
+    <a href="{% url 'logout' %}" class="logout-button">Logout</a>
 </nav>
 
   <div class="wheel-container">
@@ -24,6 +26,42 @@
     <button id="spin-button">Spin</button>
     <div id="result" class="result"></div>
   </div>
-  <script src="spin.js" defer></script>
+  <style>
+    .dashboard-button {
+        display: inline-block; /* Ensures it behaves like a box */
+        padding: 10px 20px; /* Adjust padding to create a box effect */
+        border: 0px solid white; /* White border for visibility */
+        border-radius: 8px; /* Rounded corners */
+        background-color: rgba(255, 0, 0, 0.923); /* Red background */
+        color: white; /* White text */
+        text-decoration: none; /* Removes underline */
+        font-weight: bold; /* Makes text bolder */
+        text-align: center; /* Centers text inside the box */
+        right: 135px;
+        position: absolute;
+    }
+
+    .dashboard-button:hover {
+        background-color: rgba(200, 0, 0, 0.923); /* Darker red on hover */
+    }
+
+    .logout-button {
+        background-color: rgba(255, 0, 0, 0.923);
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        font-size: 1em;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        position: absolute;
+        right: 50px;
+  }
+
+    .logout-button:hover {
+        background-color: #482fd3;
+    }
+</style>
+  <script src="{% static 'spin.js' %}" defer></script>
 </body>
 </html>

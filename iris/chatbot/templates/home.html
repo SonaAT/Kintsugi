@@ -10,13 +10,13 @@
 <body>
     <nav class="navbar">
         <ul class="nav-links">
-            <li><a href="home.html">Home</a></li>
-            <li><a href="https://iris-panicassistance-lrblq2hla932jappdange8x.streamlit.app">Panic Attack Chatbot</a></li>
-            <li><a href="journaling.html">Conversational Journaling</a></li>
-            <li><a href="spin.html">Self-Care Spinwheel</a></li>
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a href="http://localhost:8501?sessionid={{ request.session.session_key }}">Panic Attack Chatbot</a></li>
+            <li><a href="http://localhost:8502?sessionid={{ request.session.session_key }}">Conversational Journaling</a></li>
+            <li><a href="{% url 'spin' %}">Self-Care Spinwheel</a></li>
         </ul>
         <div class="nav-right">
-            <a href="{% url 'dashboard' %}" class="dashboard-button" style="color: white">Dashboard</a>
+            <a href="{% url 'dashboard' %}" class="dashboard-button" style="color: white; background-color: rgba(255, 0, 0, 0.923);">Dashboard</a>
             <a href="{% url 'logout' %}" class="logout-button">Logout</a>
         </div>
     </nav>
@@ -36,16 +36,16 @@
     <section class="bottom-section">
         <div class="button-container">
             <div class="button-item">
-                <img src="chat.webp" alt="Panic Attack" class="button-icon">
-                <a href="https://iris-panicassistance-lrblq2hla932jappdange8x.streamlit.app" class="button-link">Panic Attack Chatbot</a>
+                <img src="{% static 'chat.webp' %}" alt="Panic Attack" class="button-icon">
+                <a href="http://localhost:8501?sessionid={{ request.session.session_key }}" class="button-link">Panic Attack Chatbot</a>
             </div>
             <div class="button-item">
-                <img src="journal.webp" alt="Journaling" class="button-icon">
-                <a href="journaling.html" class="button-link">Conversational Journaling</a>
+                <img src="{% static 'journal.webp' %}" alt="Journaling" class="button-icon">
+                <a href="http://localhost:8502?sessionid={{ request.session.session_key }}" class="button-link">Conversational Journaling</a>
             </div>
             <div class="button-item">
-                <img src="spin wheel.gif" alt="Spinwheel" class="button-icon">
-                <a href="spin.html" class="button-link">Self-Care Spinwheel</a>
+                <img src="{% static 'spin wheel.gif' %}" alt="Spinwheel" class="button-icon">
+                <a href="{% url 'spin' %}" class="button-link">Self-Care Spinwheel</a>
             </div>
         </div>
     </section>

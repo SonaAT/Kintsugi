@@ -6,6 +6,14 @@ from django.contrib.auth.models import User
 from django.views.decorators.cache import cache_control
 from .models import PanicAttackEntry, DailyMoodEntry
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import PanicAttackEntrySerializer, DailyMoodEntrySerializer
+import re
 
 # Create your views here.
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -70,3 +78,62 @@ def dashboard(request):
     }
 
     return render(request, 'dashboard.html', context)
+
+@api_view(['POST'])
+def save_trigger(request):
+    """
+    API endpoint to save panic attack trigger data.
+    """
+    try:
+        username = request.data.get("username")
+        trigger = request.data.get("trigger")
+
+        if not username:
+            return Response({"error": "Username is missing"}, status=status.HTTP_400_BAD_REQUEST)
+
+        print(f"Received trigger for user: {username}")  # Debugging output
+
+        user = User.objects.get(username=username)  # Check if user exists
+        panic_entry = PanicAttackEntry.objects.create(user=user, trigger=trigger)
+        serializer = PanicAttackEntrySerializer(panic_entry)
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    except User.DoesNotExist:
+        return Response({"error": f"User '{username}' not found"}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def save_mood(request):
+    """
+    API endpoint to save daily mood data.
+    """
+    try:
+        username = request.data.get("username")
+        mood_text = request.data.get("mood")
+
+        # Extract mood from quotes using regex
+        mood_match = re.search(r'"(.*?)"', mood_text)
+        mood = mood_match.group(1) if mood_match else "Unknown"  # Default to "Unknown" if no match
+
+        user = User.objects.get(username=username)
+        mood_entry = DailyMoodEntry.objects.create(user=user, mood=mood)
+        serializer = DailyMoodEntrySerializer(mood_entry)
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    except User.DoesNotExist:
+        return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+@login_required
+def get_logged_in_user(request):
+    """
+    API endpoint to get the currently logged-in user.
+    """
+    return JsonResponse({"username": request.user.username})
+
+@login_required
+def spin_view(request):
+    return render(request, 'spin.html')

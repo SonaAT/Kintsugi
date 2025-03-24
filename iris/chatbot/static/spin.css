@@ -11,7 +11,7 @@ body {
   overflow: hidden; /* Prevents scrolling */
 }
 
-/* Navigation Bar */
+/* Updated Navigation Bar */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -19,20 +19,23 @@ body {
   background-color: #333;
   padding: 15px 20px;
   color: white;
-  width: 100%; /* Makes it stretch fully */
+  width: 100%;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
+  box-sizing: border-box; /* Ensures padding is included in width */
 }
 
+/* Navigation links */
 .nav-links {
   list-style: none;
   display: flex;
   gap: 15px;
   margin: 0;
   padding: 0;
-  flex-grow: 1;
+  flex-grow: 1; /* Allows it to stretch */
+  justify-content: center; /* Centers links */
 }
 
 .nav-links li {
@@ -54,20 +57,22 @@ body {
   color: #f9c5d1; /* Pastel hover effect */
 }
 
+/* Updated Logout Button */
 .logout-button {
-  background-color: #f44336; /* Red for logout */
+  background-color: #f44336;
   color: white;
   border: none;
-  padding: 8px 12px;
+  padding: 10px 15px;
   font-size: 1em;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-left: 20px; /* Aligns logout button correctly */
+  position: absolute;
+  right: 50px;
 }
 
 .logout-button:hover {
-  background-color: #d32f2f;
+  background-color: #482fd3;
 }
 
 .wheel-container {

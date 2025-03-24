@@ -11,10 +11,10 @@
     <!-- Navbar -->
     <nav class="navbar">
         <ul class="nav-links">
-            <li><a href="home.html" style="color: black;">Home</a></li>
-            <li><a href="https://iris-panicassistance-lrblq2hla932jappdange8x.streamlit.app" style="color: black;">Panic Attack Chatbot</a></li>
-            <li><a href="journaling.html" style="color: black;">Conversational Journaling</a></li>
-            <li><a href="spin.html" style="color: black;">Self-Care Spinwheel</a></li>
+            <li><a href="{% url 'index' %}" style="color: black;">Home</a></li>
+            <li><a href="http://localhost:8501?sessionid={{ request.session.session_key }}" style="color: black;">Panic Attack Chatbot</a></li>
+            <li><a href="http://localhost:8502?sessionid={{ request.session.session_key }}" style="color: black;">Conversational Journaling</a></li>
+            <li><a href="{% url 'spin' %}" style="color: black;">Self-Care Spinwheel</a></li>
         </ul>
         <div class="nav-right">
             <a href="{% url 'dashboard' %}" class="dashboard-button" style="color: white">Dashboard</a>
