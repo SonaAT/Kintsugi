@@ -28,7 +28,7 @@
         <!-- Date Picker -->
         <div class="date-filter">
             <label for="date">Select Date:</label>
-            <input type="date" id="date" onchange="filterData()">
+            <input type="date" id="date" name="date" value="{{ selected_date }}" onchange="filterByDate()">
         </div>
 
         <!-- Trigger Section -->
@@ -61,13 +61,11 @@
     </div>
 
     <script>
-        function filterData() {
-            let selectedDate = document.getElementById('date').value;
-            
-            document.querySelectorAll("#trigger-list li, #mood-list li").forEach(item => {
-                let itemDate = item.getAttribute('data-date');
-                item.style.display = itemDate === selectedDate ? "block" : "none";
-            });
+        function filterByDate() {
+            const selectedDate = document.getElementById('date').value;
+            if (selectedDate) {
+                window.location.href = `?date=${selectedDate}`;
+            }
         }
     </script>
 </body>

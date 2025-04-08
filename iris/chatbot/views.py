@@ -14,6 +14,10 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import PanicAttackEntrySerializer, DailyMoodEntrySerializer
 import re
+from django.utils import timezone
+from datetime import timedelta
+import pytz
+from datetime import datetime
 
 # Create your views here.
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -59,22 +63,46 @@ def signup_view(request):
 
     return render(request, "signup.html")
 
+
 @login_required
 def dashboard(request):
-    # Fetching triggers and moods for the logged-in user
-    triggers = PanicAttackEntry.objects.filter(user=request.user).order_by('-timestamp')
-    moods = DailyMoodEntry.objects.filter(user=request.user).order_by('-timestamp')
+    ist = pytz.timezone('Asia/Kolkata')
+    now_ist = timezone.now().astimezone(ist)
 
-    # Extract only the time (HH:MM format) for display
+    # Check if a date was selected via query param
+    selected_date_str = request.GET.get('date')
+    if selected_date_str:
+        try:
+            selected_date = datetime.strptime(selected_date_str, '%Y-%m-%d').date()
+        except ValueError:
+            selected_date = now_ist.date()
+    else:
+        selected_date = now_ist.date()
+
+    # Filter entries based on selected date
+    triggers = PanicAttackEntry.objects.filter(
+        user=request.user,
+        timestamp__date=selected_date
+    ).order_by('-timestamp')
+
+    moods = DailyMoodEntry.objects.filter(
+        user=request.user,
+        timestamp__date=selected_date
+    ).order_by('-timestamp')
+
+    # Format time in IST
     for entry in triggers:
+        entry.timestamp = entry.timestamp.astimezone(ist)
         entry.time_only = entry.timestamp.strftime('%H:%M')
 
     for entry in moods:
+        entry.timestamp = entry.timestamp.astimezone(ist)
         entry.time_only = entry.timestamp.strftime('%H:%M')
 
     context = {
         'triggers': triggers,
-        'moods': moods
+        'moods': moods,
+        'selected_date': selected_date
     }
 
     return render(request, 'dashboard.html', context)
@@ -113,9 +141,7 @@ def save_mood(request):
         username = request.data.get("username")
         mood_text = request.data.get("mood")
 
-        # Extract mood from quotes using regex
-        mood_match = re.search(r'"(.*?)"', mood_text)
-        mood = mood_match.group(1) if mood_match else "Unknown"  # Default to "Unknown" if no match
+        mood = mood_text if mood_text else "Unknown"  # Remove unnecessary regex
 
         user = User.objects.get(username=username)
         mood_entry = DailyMoodEntry.objects.create(user=user, mood=mood)
@@ -126,6 +152,7 @@ def save_mood(request):
         return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
 
 @login_required
 def get_logged_in_user(request):

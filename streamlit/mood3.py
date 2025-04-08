@@ -126,7 +126,15 @@ if user_input := st.chat_input(placeholder="Type your response here..."):
     st.session_state.messages.append({"role": "assistant", "content": full_response})
     
     if user_input.lower() == "i'm better now":
-        emotion_prompt = st.session_state.response_emotion + ["Extract the most prevalent emotion from the user's response in one word."]
+        # Ensure response_emotion is a list and properly formatted
+        if not isinstance(st.session_state.response_emotion, list):
+            st.session_state.response_emotion = []
+
+        # Construct the prompt properly
+        emotion_prompt = st.session_state.response_emotion + [
+            'Extract the most prevalent emotion from the user\'s response in one word. '
+            'Return only the word and nothing else, enclosed in double quotes.'
+        ]
         output = replicate.run(
             llm,
             input={
