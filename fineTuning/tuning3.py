@@ -1,5 +1,5 @@
 # step1____________________________________________________________________________________________________
-!pip install -q accelerate==0.21.0 peft==0.4.0 bitsandbytes==0.40.2 transformers==4.31.0 trl==0.4.7 huggingface_hub
+pip install -q accelerate==0.21.0 peft==0.4.0 bitsandbytes==0.40.2 transformers==4.31.0 trl==0.4.7 huggingface_hub
 
 # step2____________________________________________________________________________________________________
 import os
@@ -22,119 +22,45 @@ from huggingface_hub import login
 
 # step4____________________________________________________________________________________________________
 login(token="your_huggingface_token")
-# The model that you want to train from the Hugging Face hub
-model_name = "NousResearch/Llama-2-7b-chat-hf"  #"NousResearch/Llama-2-3b-hf"
 
-# The instruction dataset to use
-# dataset_name = "output.txt"
-
-# Fine-tuned model name
+model_name = "NousResearch/Llama-2-7b-chat-hf"
 new_model = "Llama-2-7b-chat-finetune"
 
-################################################################################
-# QLoRA parameters
-################################################################################
-
-# LoRA attention dimension
 lora_r = 64
-
-# Alpha parameter for LoRA scaling
 lora_alpha = 16
-
-# Dropout probability for LoRA layers
 lora_dropout = 0.1
 
-################################################################################
-# bitsandbytes parameters
-################################################################################
-
-# Activate 4-bit precision base model loading
 use_4bit = True
-
-# Compute dtype for 4-bit base models
 bnb_4bit_compute_dtype = "float16"
-
-# Quantization type (fp4 or nf4)
 bnb_4bit_quant_type = "nf4"
-
-# Activate nested quantization for 4-bit base models (double quantization)
 use_nested_quant = False
 
-################################################################################
-# TrainingArguments parameters
-################################################################################
-
-# Output directory where the model predictions and checkpoints will be stored
 output_dir = "./results"
-
-# Number of training epochs
 num_train_epochs = 1
-
-# Enable fp16/bf16 training (set bf16 to True with an A100)
 fp16 = False
 bf16 = False
-
-# Batch size per GPU for training
 per_device_train_batch_size = 1
-
-# Batch size per GPU for evaluation
 per_device_eval_batch_size = 1
-
-# Number of update steps to accumulate the gradients for
 gradient_accumulation_steps = 8
-
-# Enable gradient checkpointing
 gradient_checkpointing = True
-
-# Maximum gradient normal (gradient clipping)
 max_grad_norm = 0.3
-
-# Initial learning rate (AdamW optimizer)
 learning_rate = 2e-4
-
-# Weight decay to apply to all layers except bias/LayerNorm weights
 weight_decay = 0.001
-
-# Optimizer to use
 optim = "paged_adamw_32bit"
-
-# Learning rate schedule
 lr_scheduler_type = "cosine"
-
-# Number of training steps (overrides num_train_epochs)
 max_steps = -1
-
-# Ratio of steps for a linear warmup (from 0 to learning rate)
 warmup_ratio = 0.03
-
-# Group sequences into batches with same length
-# Saves memory and speeds up training considerably
 group_by_length = True
-
-# Save checkpoint every X updates steps
 save_steps = 0
-
-# Log every X updates steps
 logging_steps = 25
 
-################################################################################
-# SFT parameters
-################################################################################
-
-# Maximum sequence length to use
 max_seq_length = None
-
-# Pack multiple short examples in the same input sequence to increase efficiency
 packing = False
-
-# Load the entire model on the GPU 0
-device_map = "auto"     #device_map = {"": 0}
+device_map = "auto"
 
 # step5____________________________________________________________________________________________________
-# Load dataset (you can process it here)
 dataset = load_dataset("json", data_files="processed_dataset.json")
 
-# Load tokenizer and model with QLoRA configuration
 compute_dtype = getattr(torch, bnb_4bit_compute_dtype)
 
 bnb_config = BitsAndBytesConfig(
@@ -144,7 +70,6 @@ bnb_config = BitsAndBytesConfig(
     bnb_4bit_use_double_quant=use_nested_quant,
 )
 
-# Check GPU compatibility with bfloat16
 if compute_dtype == torch.float16 and use_4bit:
     major, _ = torch.cuda.get_device_capability()
     if major >= 8:
@@ -152,7 +77,6 @@ if compute_dtype == torch.float16 and use_4bit:
         print("Your GPU supports bfloat16: accelerate training with bf16=True")
         print("=" * 80)
 
-# Load base model
 model = AutoModelForCausalLM.from_pretrained(
     model_name,
     quantization_config=bnb_config,
@@ -161,12 +85,10 @@ model = AutoModelForCausalLM.from_pretrained(
 model.config.use_cache = False
 model.config.pretraining_tp = 1
 
-# Load LLaMA tokenizer
 tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
 tokenizer.pad_token = tokenizer.eos_token
-tokenizer.padding_side = "right" # Fix weird overflow issue with fp16 training
+tokenizer.padding_side = "right"
 
-# Load LoRA configuration
 peft_config = LoraConfig(
     lora_alpha=lora_alpha,
     lora_dropout=lora_dropout,
@@ -175,7 +97,6 @@ peft_config = LoraConfig(
     task_type="CAUSAL_LM",
 )
 
-# Set training parameters
 training_arguments = TrainingArguments(
     output_dir=output_dir,
     num_train_epochs=num_train_epochs,
@@ -194,11 +115,10 @@ training_arguments = TrainingArguments(
     group_by_length=group_by_length,
     lr_scheduler_type=lr_scheduler_type,
     report_to="tensorboard",
-    save_steps=500,  # Save every 500 steps
-    save_total_limit=2,  # Keep only last 2 checkpoints
+    save_steps=500,
+    save_total_limit=2,
 )
 
-# Set supervised fine-tuning parameters
 trainer = SFTTrainer(
     model=model,
     train_dataset=dataset,
@@ -210,13 +130,10 @@ trainer = SFTTrainer(
     packing=packing,
 )
 
-# Train model
-resume_checkpoint = None  # Change this to your checkpoint path if needed
+resume_checkpoint = None
 trainer.train(resume_from_checkpoint=resume_checkpoint)
 
 # step6____________________________________________________________________________________________________
-# Save trained model
-#trainer.model.save_pretrained(new_model)
-trainer.model.save_pretrained(new_model)  # Save LoRA adapters first
+trainer.model.save_pretrained(new_model)
 merged_model = PeftModel.from_pretrained(model, new_model)
-merged_model.save_pretrained(new_model + "_merged")  # Save merged model
+merged_model.save_pretrained(new_model + "_merged")
